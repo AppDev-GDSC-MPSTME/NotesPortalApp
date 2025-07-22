@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesportal/model/model.dart';
 import 'package:notesportal/network/network.dart';
+import 'package:notesportal/screens/results.dart';
 
 class SubjectFormPage extends StatefulWidget {
   @override
@@ -84,7 +86,8 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                             _formKey.currentState?.save();
                             _subject = _subjectController.text;
 
-                            SupaBaseAPI().traverseFileLinks(_subjectController.text.toString());
+                            // Future<List<Note>> results = SupaBaseAPI().traverseFileLinks(_subjectController.text.toString());
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultsScreen(notes: SupaBaseAPI().traverseFileLinks(_subjectController.text.toString()))));
                           }
                         },
                         style: ElevatedButton.styleFrom(

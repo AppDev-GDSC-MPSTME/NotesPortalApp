@@ -30,7 +30,6 @@ class SupaBaseAPI {
       }
     }
 
-    print(notes);
     return notes;
   }
 }
