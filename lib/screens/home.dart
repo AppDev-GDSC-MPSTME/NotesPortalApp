@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesportal/network/network.dart';
 
 class SubjectFormPage extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class SubjectFormPage extends StatefulWidget {
 class _SubjectFormPageState extends State<SubjectFormPage> {
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _subjectController = TextEditingController();
   String? _subject;
   String? _selectedYear;
   String? _selectedSemester;
@@ -18,16 +20,36 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
   final List<String> _semesters = ['Semester 1', 'Semester 2'];
 
   @override
+  void dispose() {
+    _subjectController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = GoogleFonts.interTextTheme(Theme.of(context).textTheme);
 
     return Theme(
       data: Theme.of(context).copyWith(textTheme: textTheme),
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xFF222222),
         appBar: AppBar(
-          title: Text('NotesPortal', style: GoogleFonts.inter(letterSpacing: -1, color: Colors.white, fontWeight: FontWeight.w500), textAlign: TextAlign.left),
+          actions: [
+            IconButton(
+              padding: EdgeInsets.only(right: 20),
+              onPressed: () {},
+              icon: Icon(CupertinoIcons.profile_circled, size: 24, color: Colors.white),
+            )
+          ],
+          title: Text(
+            'NotesPortal',
+            style: GoogleFonts.inter(
+              letterSpacing: -1,
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.left,
+          ),
           backgroundColor: Color(0xFF222222),
         ),
         body: SingleChildScrollView(
@@ -42,6 +64,7 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
+                        controller: _subjectController,
                         style: GoogleFonts.inter(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: 'Subject',
@@ -54,65 +77,19 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                         onSaved: (value) => _subject = value,
                       ),
                       SizedBox(height: 16),
-                      // DropdownButtonFormField<String>(
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Year',
-                      //     labelStyle: GoogleFonts.inter(color: Colors.white),
-                      //     border: OutlineInputBorder(),
-                      //     prefixIcon: Icon(Icons.calendar_today, color: Colors.white,),
-                      //   ),
-                      //   style: GoogleFonts.inter(color: Colors.black),
-                      //   items: _years
-                      //       .map((year) => DropdownMenuItem(
-                      //     value: year,
-                      //     child: Text(year, style: GoogleFonts.inter()),
-                      //   ))
-                      //       .toList(),
-                      //   onChanged: (value) => setState(() => _selectedYear = value),
-                      //   validator: (value) =>
-                      //   value == null ? 'Please select a year' : null,
-                      // ),
-                      // SizedBox(height: 4),
-                      DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          labelText: 'Semester',
-                          labelStyle: GoogleFonts.inter(color: Colors.white),
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(CupertinoIcons.calendar, color: Colors.white),
-                        ),
-                        style: GoogleFonts.inter(color: Colors.white),
-                        items: _semesters
-                            .map((sem) => DropdownMenuItem(
-                          value: sem,
-                          child: Text(sem, style: GoogleFonts.inter()),
-                        ))
-                            .toList(),
-                        onChanged: (value) => setState(() => _selectedSemester = value),
-                        validator: (value) =>
-                        value == null ? 'Please select a semester' : null,
-                      ),
-                      SizedBox(height: 30),
-                      // subject
 
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState?.validate() ?? false) {
                             _formKey.currentState?.save();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.greenAccent,
-                                content: Text(
-                                  'Subject: $_subject\nYear: $_selectedYear\nSemester: $_selectedSemester',
-                                  style: GoogleFonts.inter(color: Colors.black),
-                                ),
+                            _subject = _subjectController.text;
 
-                              ),
-                            );
+                            SupaBaseAPI().traverseFileLinks(_subjectController.text.toString());
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           iconAlignment: IconAlignment.end,
-                          backgroundColor: Colors.greenAccent,
+                          backgroundColor: Color(0xFF573DA0),
                           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
@@ -124,12 +101,17 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                             Text(
                               'Submit',
                               style: GoogleFonts.inter(
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                  letterSpacing: -0.4
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: -0.4,
                               ),
                             ),
-                            Icon(CupertinoIcons.chevron_right_circle, size: 20, color: Colors.black,)
+                            Icon(
+                              CupertinoIcons.chevron_right_circle_fill,
+                              size: 20,
+                              color: Colors.white,
+                            ),
                           ],
                         ),
                       ),
