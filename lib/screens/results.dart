@@ -53,7 +53,7 @@ class ResultsScreen extends StatelessWidget {
                       Text(
                         'Loading notes...',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 16,
                         ),
                       ),
@@ -83,7 +83,6 @@ class ResultsScreen extends StatelessWidget {
                       SizedBox(height: 8),
                       TextButton(
                         onPressed: () {
-                          // Refresh the page
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -132,105 +131,104 @@ class ResultsScreen extends StatelessWidget {
                 itemCount: noteList.length,
                 itemBuilder: (context, index) {
                   return GridTile(
-                      child: CupertinoButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              print("de");
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => Scaffold(
-                                                    appBar: AppBar(
-                                                      title: Text(noteList[index].fileName),
-                                                      backgroundColor: Color(0xFFF5F4F4),
-                                                      iconTheme: IconThemeData(color: Colors.black),
-                                                    ),
-                                                    body: SfPdfViewer.network(
-                                                      noteList[index].pdfLink,
-                                                      canShowPaginationDialog: false,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(left: 18, right: 18, bottom: 22),
-                                              padding: EdgeInsets.all(15),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(12),
-                                                color: Color(0xFFEEEEEE),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          "${index + 1}. ${noteList[index].fileName}",
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.w600,
-                                                            fontSize: 14
-                                                          ),
-                                                          overflow: TextOverflow.ellipsis,
-                                                          maxLines: 1,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Text("@", style: TextStyle(color: Colors.grey, fontSize: 15),),
-                                                          Text(
-                                                            noteList[index].author,
-                                                            style: TextStyle(color: Color(0xFFB4A6D5), fontSize: 15, fontWeight: FontWeight.w500)
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  Container(
-                                                    height: 200, // Fixed height for preview
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(8),
-                                                      color: Colors.grey.withOpacity(0.1),
-                                                    ),
-                                                    child: ClipRRect(
-                                                      borderRadius: BorderRadius.circular(8),
-                                                      child: SfPdfViewer.network(
-                                                        noteList[index].pdfLink,
-                                                        canShowPaginationDialog: false,
-                                                        canShowScrollHead: false,
-                                                        enableDoubleTapZooming: false,
-                                                        enableTextSelection: false,
-                                                        pageSpacing: 0,
-                                                        initialZoomLevel: 1.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          capitalizeFirstLetter(noteList[index].desc),
-                                                          style: TextStyle(color: Colors.black45, fontSize: 15),
-                                                          overflow: TextOverflow.ellipsis,
-                                                          maxLines: 1,
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                        CupertinoIcons.chevron_right_circle_fill,
-                                                        color: Color(0xFFB4A6D5),
-                                                        size: 18
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                              appBar: AppBar(
+                                title: Text(noteList[index].fileName),
+                                backgroundColor: Color(0xFFF5F4F4),
+                                iconTheme: IconThemeData(color: Colors.black),
+                              ),
+                              body: SfPdfViewer.network(
+                                noteList[index].pdfLink,
+                                canShowPaginationDialog: false,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 18, right: 18, bottom: 22),
+                        padding: EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Color(0xFFEEEEEE),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "${index + 1}. ${noteList[index].fileName}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text("@", style: TextStyle(color: Colors.grey, fontSize: 15),),
+                                    Text(
+                                      noteList[index].author,
+                                      style: TextStyle(color: Color(0xFFB4A6D5), fontSize: 15, fontWeight: FontWeight.w500)
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.grey.withOpacity(0.1),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: SfPdfViewer.network(
+                                  noteList[index].pdfLink,
+                                  canShowPaginationDialog: false,
+                                  canShowScrollHead: false,
+                                  enableDoubleTapZooming: false,
+                                  enableTextSelection: false,
+                                  pageSpacing: 0,
+                                  initialZoomLevel: 1.0,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    capitalizeFirstLetter(noteList[index].desc),
+                                    style: TextStyle(color: Colors.black45, fontSize: 15),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                Icon(
+                                  CupertinoIcons.chevron_right_circle_fill,
+                                  color: Color(0xFFB4A6D5),
+                                  size: 18
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
               );

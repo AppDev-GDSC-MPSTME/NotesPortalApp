@@ -54,73 +54,118 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
           ),
           backgroundColor: Color(0xFFF5F4F4),
         ),
-        body: SingleChildScrollView(
+        body: SafeArea(
           child: Container(
+            height: MediaQuery.of(context).size.height,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextFormField(
-                        controller: _subjectController,
-                        style: GoogleFonts.inter(color: Colors.black),
-                        decoration: InputDecoration(
-                          labelText: 'Subject',
-                          labelStyle: GoogleFonts.inter(color: Colors.black),
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(CupertinoIcons.book, color: Colors.black),
-                        ),
-                        validator: (value) =>
-                        value == null || value.isEmpty ? 'Please enter a subject' : null,
-                        onSaved: (value) => _subject = value,
-                      ),
-                      SizedBox(height: 16),
-
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            _formKey.currentState?.save();
-                            _subject = _subjectController.text;
-
-                            // Future<List<Note>> results = SupaBaseAPI().traverseFileLinks(_subjectController.text.toString());
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultsScreen(notes: SupaBaseAPI().traverseFileLinks(_subjectController.text.toString()))));
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          iconAlignment: IconAlignment.end,
-                          backgroundColor: Color(0xFF573DA0),
-                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
+              padding: EdgeInsets.only(
+                left: 34.0,
+                right: 34.0,
+                top: 30.0,
+                bottom: 28,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          controller: _subjectController,
+                          style: GoogleFonts.inter(
+                            color: Colors.black,
+                            fontSize: 17,
                           ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Submit',
-                              style: GoogleFonts.inter(
-                                fontSize: 17,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: -0.4,
+                          decoration: InputDecoration(
+                            labelText: 'Subject',
+                            labelStyle: GoogleFonts.inter(
+                              color: Colors.black54,
+                              fontSize: 17,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none, // Removes the border
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFE7E7E7), // Subtle grey background
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 16,
+                            ),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(left: 10), // Indents the icon
+                              child: Icon(
+                                CupertinoIcons.book,
+                                color: Colors.black54,
+                                size: 20, // Slightly smaller icon for iOS feel
                               ),
                             ),
-                            Icon(
-                              CupertinoIcons.chevron_right_circle_fill,
-                              size: 20,
-                              color: Colors.white,
+                            prefixIconConstraints: BoxConstraints(
+                              minWidth: 50,
+                              minHeight: 40,
                             ),
-                          ],
+                            floatingLabelBehavior: FloatingLabelBehavior.never, // Makes it more iOS-like
+                            hintStyle: GoogleFonts.inter(
+                              color: Colors.black54,
+                              fontSize: 17,
+                            ),
+                          ),
+                          validator: (value) =>
+                              value == null || value.isEmpty ? 'Please enter a subject' : null,
+                          onSaved: (value) => _subject = value,
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              _formKey.currentState?.save();
+                              _subject = _subjectController.text;
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ResultsScreen(
+                                    notes: SupaBaseAPI().traverseFileLinks(
+                                      _subjectController.text.toString()
+                                    )
+                                  )
+                                )
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            iconAlignment: IconAlignment.end,
+                            backgroundColor: Color(0xFF53399A),
+                            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Submit',
+                                style: GoogleFonts.inter(
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.4,
+                                ),
+                              ),
+                              Icon(
+                                CupertinoIcons.chevron_right_circle_fill,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
