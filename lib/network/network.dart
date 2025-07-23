@@ -24,7 +24,9 @@ class SupaBaseAPI {
       for (int x = 0; x < res["sending"].length; x++) {
         Note current = Note(
           author: res["sending"][x]["uploaded_by"],
-          pdfLink: res["sending"][x]["filelink"]
+          pdfLink: res["sending"][x]["filelink"],
+          fileName: res["sending"][x]["filename"],
+          desc: res["sending"][x]["description"]
         );
         notes.add(current);
       }

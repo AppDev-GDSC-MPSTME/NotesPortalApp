@@ -34,25 +34,25 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
     return Theme(
       data: Theme.of(context).copyWith(textTheme: textTheme),
       child: Scaffold(
-        backgroundColor: Color(0xFF222222),
+        backgroundColor: Color(0xFFF5F4F4),
         appBar: AppBar(
           actions: [
             IconButton(
               padding: EdgeInsets.only(right: 20),
               onPressed: () {},
-              icon: Icon(CupertinoIcons.profile_circled, size: 24, color: Colors.white),
+              icon: Icon(CupertinoIcons.profile_circled, size: 24, color: Colors.black),
             )
           ],
           title: Text(
             'NotesPortal',
             style: GoogleFonts.inter(
               letterSpacing: -1,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.left,
           ),
-          backgroundColor: Color(0xFF222222),
+          backgroundColor: Color(0xFFF5F4F4),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -67,12 +67,12 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                     children: [
                       TextFormField(
                         controller: _subjectController,
-                        style: GoogleFonts.inter(color: Colors.white),
+                        style: GoogleFonts.inter(color: Colors.black),
                         decoration: InputDecoration(
                           labelText: 'Subject',
-                          labelStyle: GoogleFonts.inter(color: Colors.white),
+                          labelStyle: GoogleFonts.inter(color: Colors.black),
                           border: OutlineInputBorder(),
-                          prefixIcon: Icon(CupertinoIcons.book, color: Colors.white),
+                          prefixIcon: Icon(CupertinoIcons.book, color: Colors.black),
                         ),
                         validator: (value) =>
                         value == null || value.isEmpty ? 'Please enter a subject' : null,
