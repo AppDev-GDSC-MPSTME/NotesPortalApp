@@ -5,8 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:notesportal/model/model.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-// ... previous imports and code remain the same
-
 class ResultsScreen extends StatelessWidget {
   final Future<List<Note>> notes;
 
@@ -138,7 +136,6 @@ class ResultsScreen extends StatelessWidget {
                                             padding: EdgeInsets.zero,
                                             onPressed: () {
                                               print("de");
-                                              // You might want to navigate to a full PDF viewer here
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -193,7 +190,6 @@ class ResultsScreen extends StatelessWidget {
                                                     ],
                                                   ),
                                                   SizedBox(height: 10),
-                                                  // Add PDF preview with constrained height
                                                   Container(
                                                     height: 200, // Fixed height for preview
                                                     decoration: BoxDecoration(
