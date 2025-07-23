@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesportal/model/model.dart';
 import 'package:notesportal/network/network.dart';
+import 'package:notesportal/screens/results.dart';
 
 class SubjectFormPage extends StatefulWidget {
   @override
@@ -32,25 +34,25 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
     return Theme(
       data: Theme.of(context).copyWith(textTheme: textTheme),
       child: Scaffold(
-        backgroundColor: Color(0xFF222222),
+        backgroundColor: Color(0xFFF5F4F4),
         appBar: AppBar(
           actions: [
             IconButton(
               padding: EdgeInsets.only(right: 20),
               onPressed: () {},
-              icon: Icon(CupertinoIcons.profile_circled, size: 24, color: Colors.white),
+              icon: Icon(CupertinoIcons.profile_circled, size: 24, color: Colors.black),
             )
           ],
           title: Text(
             'NotesPortal',
             style: GoogleFonts.inter(
               letterSpacing: -1,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.left,
           ),
-          backgroundColor: Color(0xFF222222),
+          backgroundColor: Color(0xFFF5F4F4),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -65,12 +67,12 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                     children: [
                       TextFormField(
                         controller: _subjectController,
-                        style: GoogleFonts.inter(color: Colors.white),
+                        style: GoogleFonts.inter(color: Colors.black),
                         decoration: InputDecoration(
                           labelText: 'Subject',
-                          labelStyle: GoogleFonts.inter(color: Colors.white),
+                          labelStyle: GoogleFonts.inter(color: Colors.black),
                           border: OutlineInputBorder(),
-                          prefixIcon: Icon(CupertinoIcons.book, color: Colors.white),
+                          prefixIcon: Icon(CupertinoIcons.book, color: Colors.black),
                         ),
                         validator: (value) =>
                         value == null || value.isEmpty ? 'Please enter a subject' : null,
@@ -84,7 +86,8 @@ class _SubjectFormPageState extends State<SubjectFormPage> {
                             _formKey.currentState?.save();
                             _subject = _subjectController.text;
 
-                            SupaBaseAPI().traverseFileLinks(_subjectController.text.toString());
+                            // Future<List<Note>> results = SupaBaseAPI().traverseFileLinks(_subjectController.text.toString());
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultsScreen(notes: SupaBaseAPI().traverseFileLinks(_subjectController.text.toString()))));
                           }
                         },
                         style: ElevatedButton.styleFrom(
